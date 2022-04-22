@@ -24,7 +24,6 @@ function sqrt(value: any) {
 describe("ERC20", function () {
     let owner: SignerWithAddress
     let stakerOne: SignerWithAddress
-    let stakerTwo: SignerWithAddress
     let token: Contract
     let router: IUniswapV2Router02
     let factory: IUniswapV2Factory
@@ -60,9 +59,7 @@ describe("ERC20", function () {
         tokenAmount = ethers.BigNumber.from(1000000);
         etherAmount = ethers.utils.parseEther("1")
         await token.mint(stakerOne.address, tokenAmount)
-        await token.mint(stakerTwo.address, tokenAmount)
         await token.connect(stakerOne).approve(router.address, tokenAmount)
-        await token.connect(stakerTwo).approve(router.address, tokenAmount)
 
         // Create the liquidity
         let deadline = await (await ethers.provider.getBlock(
@@ -126,7 +123,7 @@ describe("ERC20", function () {
     it("should able to claim", async function () {
         await jdtstake.connect(stakerOne).stake(lpAmount)
 
-        await new Promise(f => setTimeout(f, 5000));
+        await new Promise(f => setTimeout(f, 10000));
 
         let preStakerRewardToken = await token.balanceOf(stakerOne.address)
         
@@ -134,8 +131,6 @@ describe("ERC20", function () {
 
         let postStakerRewardToken = await token.balanceOf(stakerOne.address)
         
-        console.log(postStakerRewardToken.sub(preStakerRewardToken))
-
         expect(preStakerRewardToken < postStakerRewardToken).to.be.true
     })
 

@@ -1,46 +1,83 @@
-# Advanced Sample Hardhat Project
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+<h1 align="center"><b>JediStaking Smart Contract</b></h3>
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+<div align="left">
 
-Try running some of the following tasks:
+
+[![Language](https://img.shields.io/badge/language-solidity-orange.svg)]()
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+
+</div>
+
+---
+
+<p align="center"><h2 align="center"><b>Solidity Smart contract for Staking JDT ERC20 Tokens
+    </h2></b><br> 
+</p>
+
+## 📝 Table of Contents
+
+- [EtherScan Link](#etherscan)
+- [Installing](#install)
+- [Contract Functions](#functions)
+- [Deploy & Test Scripts](#scripts)
+- [HardHat Tasks](#tasks)
+
+## 🚀 Link on EtherScan <a name = "etherscan"></a>
+
+https://rinkeby.etherscan.io/address/0x4AB7544890020E913995eAf0582B370175Ee2019#code
+
+
+
+## 🚀 Installing <a name = "install"></a>
+- Set initial values on scripts/deploy.ts file
+- Deploy contract running on console:
+```shell
+node scripts/deploy.ts
+```
+- Copy address of deployed contract and paste to .env file as CONTRACT_ADDRESS
+- Use stake, claim and unstake functions
+
+
+
+
+## ⛓️ Contract Functions <a name = "functions"></a>
+
+- **stake()**
+>Staking function, takes amount of LP Tokens
+
+- **claim()**
+>Claims reward if reward rate passes
+
+- **unstake()**
+>Unstakes the full amount and claims left rewards
+
+- **setRewardRate()**
+>Sets the time reward gains<br>
+
+
+- **setLockTime()**
+>Sets the lock time, user can't unstake unless it passes
+
+- **setRewardPercent()**
+>Sets percent of rewards gained from amount of LP Tokens staked
+
+
+
+## 🎈 Deploy & Test Scripts <a name = "scripts"></a>
 
 ```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
+node scripts/deploy.js --network rinkeby
 npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
 ```
 
-# Etherscan verification
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
+## 💡 HardHat Tasks <a name = "tasks"></a>
 
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
 
 ```shell
-hardhat run --network ropsten scripts/deploy.ts
+npx hardhat stake
+npx hardhat claim
+npx hardhat unstake
 ```
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
-
-# Performance optimizations
-
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).

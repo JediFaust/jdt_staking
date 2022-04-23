@@ -7,7 +7,7 @@ import { ethers } from "hardhat";
 
 async function main() {
   const JediStaking = await ethers.getContractFactory("JediStaking");
-  const staking = await JediStaking.deploy();
+  const staking = await JediStaking.deploy(process.env.TOKEN_ADDRESS as string, process.env.LPTOKEN_ADDRESS as string);
 
   await staking.deployed();
 

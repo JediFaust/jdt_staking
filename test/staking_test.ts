@@ -44,10 +44,6 @@ describe("ERC20", function () {
         token = <Contract>(await testERC20.deploy("JediToken", "JDT", 10000000, 1))
         await token.deployed()
 
-        const testStake = await ethers.getContractFactory("JediStaking")
-        jdtstake = <Contract>(await testStake.deploy())
-        await jdtstake.deployed()
-
         // Get the UniswapV2 Factory and Router
         router = <IUniswapV2Router02>(await ethers.getContractAt("IUniswapV2Router02", 
             process.env.ROUTER_ADDRESS as string));
@@ -75,8 +71,13 @@ describe("ERC20", function () {
         pair = <IUniswapV2Pair>(await ethers.getContractAt("IUniswapV2Pair", 
             pairAddress as string));
 
-        jdtstake.setLPToken(pairAddress)
-        jdtstake.setRewardToken(token.address)
+        // Deploy the JediStaking contract
+        const testStake = await ethers.getContractFactory("JediStaking")
+        jdtstake = <Contract>(await testStake.deploy(pairAddress, token.address))
+        await jdtstake.deployed()
+
+        jdtstake.setRewardRate(5)
+        jdtstake.setLockTime(5)
 
         lpAmount = sqrt(tokenAmount.mul(etherAmount)).sub(ethers.BigNumber.from(1000))
         await pair.connect(stakerOne).approve(jdtstake.address, lpAmount)
